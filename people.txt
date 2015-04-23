@@ -1,4 +1,4 @@
-cities,Joe,Kelly,Stephen,Henry,Sally,David,Barry,Bruce,Barbara,Peter,Mary,Robert,Ethan,George,Kate
+people,Joe,Kelly,Stephen,Henry,Sally,David,Barry,Bruce,Barbara,Peter,Mary,Robert,Ethan,George,Kate
 Joe,0,-1,-1,-1,-1,-1,-1,-1,1,1,-1,-1,-1,-1,-1
 Kelly,-1,0,-1,-1,1,1,-1,1,-1,-1,1,-1,-1,-1,-1
 Stephen,-1,-1,0,-1,1,-1,-1,1,-1,-1,-1,-1,-1,-1,-1

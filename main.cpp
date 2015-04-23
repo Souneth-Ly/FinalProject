@@ -4,8 +4,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include "Graph.h"
-
+#include "FinalProject.h"
 
 using namespace std;
 char menu()
@@ -55,14 +54,14 @@ while(getline(infile, line))
         {
             for(int i = 1; i < vect.size(); i++)
             {
-                G.addVertex(vect[i]);
+                G.addPerson(vect[i]);
                 cities.push_back(vect[i]);
             }
         }
         else
         {
             for(int i = 1; i < vect.size();i++){
-                G.addEdge(vect[0], cities[i-1], stoi(vect[i]));
+                G.addConnection(vect[0], cities[i-1], stoi(vect[i]));
             }
         }
         vect.clear();
@@ -88,6 +87,7 @@ while(getline(infile, line))
             break;
         case '8':
             break;
+       }
 
    }while(userinput != '9');
    cout << "Goodbye!" << endl;

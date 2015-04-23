@@ -3,11 +3,12 @@
 #include<vector>
 #include<iostream>
 
-struct vertex;
+struct person;
+struct connection;
 
 struct connection{
     person *p;
-    bool isfriend;
+    bool isfriend = false;
 };
 
 struct person{
@@ -23,7 +24,7 @@ class Graph
     public:
         Graph();
         ~Graph();
-        void addConnection(std::string name);
+        void addConnection(std::string, std::string, int weight);
         void addPerson(std::string name);
         void removePerson(std::string name);
         void displayFriends();
