@@ -67,19 +67,27 @@ while(getline(infile, line))
         vect.clear();
     }
 
+    G.findDistricts();
+
    do
    {
        userinput = menu();
        switch(userinput){
         case '1':
+            cin.ignore();
+            cout << "Please enter login name" << endl;
+            getline(cin, input);
+            G.login(input);
             break;
         case '2':
             break;
         case '3':
             break;
         case '4':
+            G.displayEveryone();
             break;
         case '5':
+            G.displayFriends();
             break;
         case '6':
             break;

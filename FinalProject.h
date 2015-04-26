@@ -1,7 +1,8 @@
 #ifndef FINALPROJECT_H
 #define FINALPROJECT_H
-#include<vector>
-#include<iostream>
+#include <vector>
+#include <iostream>
+#include <queue>
 
 struct person;
 struct connection;
@@ -14,7 +15,7 @@ struct connection{
 struct person{
     std::string name;
     bool visited;
-    int personID = -1;
+    int groupID = -1;
     person *previous;
     std::vector<connection> adj;
 };
@@ -26,13 +27,14 @@ class Graph
         ~Graph();
         void addConnection(std::string, std::string, int weight);
         void addPerson(std::string name);
+        void login(std::string);
         void removePerson(std::string name);
         void displayFriends();
         void displayEveryone();
         void displayMutual();
         //void displayFriendReq();
         void findDistricts();//..change name later
-        void BFTraversal(std::string name);
+        void BFTraversal(std::string);
         void shortestConnectionPath(std::string ending_name);
         void sendReq(std::string name);
     protected:
@@ -40,7 +42,7 @@ class Graph
         //vector<edge> edges;
         std::vector<person> people;
         person *currentUser;
-        bool ifLogged;
+        bool isLogged = false;
 
 };
 

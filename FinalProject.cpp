@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 #include "FinalProject.h"
 
 Graph::Graph()
@@ -52,5 +53,99 @@ void Graph::addConnection(std::string name1, std::string name2, int weight)
                 }
             }
         }
+    }
+}
+
+void Graph::login(std::string name)
+{
+    bool found = false;
+    if(!isLogged)
+    {
+        for(int i = 0; i < people.size(); i++)
+        {
+            if(name == people[i].name)
+            {
+                isLogged = true;
+                found = true;
+                currentUser = &people[i];
+                std::cout << "Welcome " << currentUser->name << "." << std::endl;
+            }
+        }
+        if(!found)
+            std::cout << "User not found." << std::endl;
+    }
+    else
+        std::cout << "Please log out before logging in to another user." << std::endl;
+
+
+}
+
+void Graph::displayFriends()
+{
+    for(int i = 0; i < currentUser->adj.size(); i++)
+    {
+        for(int j = 0; j < currentUser->adj[i].p->adj.size(); j++)
+        {
+            if(currentUser->adj[i].p->adj[j].p->name == currentUser->name) //Checks to see if the connection has currentUser as one of his friends
+                std::cout << currentUser->adj[i].p->name << std::endl;
+        }
+    }
+}
+
+void Graph::BFTraversal(std::string name) //Breadth First Traversal used for findDistricts
+{
+    std::queue<person*> bfq;
+    person p;
+    int i = 0;
+    for(i=0; i<people.size();i++) {
+        if (name==people[i].name) {
+            p = people[i];
+            break;
+        }
+    }
+    people[i].visited = true;
+    bfq.push(&people[i]);
+
+    while (!bfq.empty()) {
+        p = *bfq.front();
+        bfq.pop();
+        for(i=0;i<p.adj.size();i++) {
+                for(int j = 0; j < p.adj[i].p->adj.size(); j++)
+                if (p.adj[i].p->visited==false && p.adj[i].p->adj[j].p->name == p.name) {
+                    p.adj[i].p->visited = true;
+                    bfq.push(p.adj[i].p);
+                }
+
+        }
+    }
+}
+
+void Graph::findDistricts()
+{
+    for(int i = 0; i < people.size(); i++)
+    {
+        people[i].visited = false;
+    }
+    int n = 0;
+    for(int i = 0; i < people.size(); i++)
+    {
+        if(people[i].visited == false)
+        {
+            BFTraversal(people[i].name);
+            n++;
+            for(int j = 0; j < people.size(); j++)
+            {
+                if(people[j].visited == true && people[j].groupID == -1)
+                    people[j].groupID = n;
+            }
+        }
+    }
+}
+
+void Graph::displayEveryone()
+{
+    for(int i = 0; i < people.size(); i++)
+    {
+        std::cout << people[i].groupID << ": " << people[i].name << std::endl;
     }
 }
