@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <vector>
 #include "FinalProject.h"
 
 Graph::Graph()
@@ -148,4 +149,135 @@ void Graph::displayEveryone()
     {
         std::cout << people[i].groupID << ": " << people[i].name << std::endl;
     }
+}
+
+void Graph::displayMutual(){
+    //bool Mutual;
+    //vector<person*> MutualwithReq
+    for(int i = 0; i < currentUser->adj.size(); i++)
+    {
+        for(int j = 0; j < currentUser->adj[i].p->adj.size(); j++)
+        {
+            for(int k = 0; k  < currentUser->adj.size(); k++)
+            {
+                if(currentUser->adj[k].p->name != currentUser->adj[i].p->adj[j].p->name && currentUser->adj[i].p->name != currentUser->adj[k].p->name && currentUser->name != currentUser->adj[i].p->adj[j].p->name){
+                   //std::cout << currentUser->adj[i].p->adj[j].p->name <<std::endl;
+                   for(int l = 0; l < currentUser->adj[i].p->adj[j].p->adj.size(); l++){
+                        //std::cout <<"Adj "<<  currentUser->adj[i].p->name << std::endl;
+                        //std::cout << "ADjadj "<<currentUser->adj[i].p->adj[l].p->name << std::endl;
+                        if(currentUser->adj[i].p->name == currentUser->adj[i].p->adj[j].p->adj[l].p->name ){
+                            std::cout << currentUser->adj[i].p->adj[j].p->name << std::endl;
+                        }
+                   }
+
+                }
+
+
+
+            }
+        }
+    }
+}
+
+void Graph::sendReq(std::string name){
+    person *Holder;
+    bool requestToPerson = true;
+    bool requestToUser = true;
+
+    for(int i = 0; i < people.size(); i++){
+        if(people[i].name == name){
+            Holder = &people[i];
+        }
+    }
+    for(int i = 0; i < currentUser->adj.size(); i++){
+        if(currentUser->adj[i].p->name == Holder->name){
+            requestToPerson = false; //If my adjacent friends contain the person, I can't send a request to the person
+        }
+    }
+    for(int i = 0; i < Holder->adj.size(); i++){
+        if(Holder->adj[i].p->name == currentUser->name){
+            requestToUser = false; //If their adjacent friends contain me, they cannot send a friend request to me
+        }
+    }
+    if(!requestToPerson && !requestToUser){
+        std::cout << "You are already friends" << std::endl;
+    }
+    if(requestToPerson && !requestToUser){
+        std::cout << "You accepted a friend request" << std::endl;
+        addConnection(currentUser->name, name, 1);
+    }
+    if(!requestToPerson && requestToUser){
+        std::cout << "You have already sent a friend request" << std::cout;
+    }
+    if(requestToPerson && requestToUser){
+        std::cout << "Friend Request sent" << std::endl;
+        addConnection(currentUser->name, name, 1);
+    }
+
+}
+void Graph::removeFriend(std::string name){
+    person *Holder;
+    bool deleteUser = false;
+    bool deleteFriend = false;
+    for(int i = 0; i < currentUser->adj.size(); i++){
+        if(currentUser->adj[i].p->name == name){
+            currentUser->adj.erase(currentUser->adj.begin() + i);
+            deleteFriend = true; //Friend removed from currentUser's adjacent list
+        }
+    }
+    for(int i = 0; i < people.size(); i++){
+        if(people[i].name == name){
+            Holder = &people[i];
+        }
+    }
+    for(int i = 0; i < Holder->adj.size(); i++){
+        if(Holder->adj[i].p->name == currentUser->name){
+            Holder->adj.erase(Holder->adj.begin() + i);
+            deleteUser = true; //currentUser removed from Friend's adjacent list
+        }
+    }
+    if(deleteUser && deleteFriend){
+        std::cout << name << " removed from list of friends" << std::endl;
+    }
+    if(!deleteUser && deleteFriend){
+        std::cout << "Friend request to " << name << " canceled" << std::endl;
+    }
+    if(!deleteUser && !deleteFriend){
+        std::cout << name << " is not on your list of friends" << std::endl;
+    }
+    if(deleteUser && !deleteFriend){
+        std::cout << name << "'s Friend request was denied" << std::endl;
+    }
+    findDistricts();
+}
+void Graph::displayFriendReq(){
+    bool isFound = false;
+    bool noReqs = true;
+    for(int i = 0; i < people.size(); i++){
+        for(int k = 0; k < people[i].adj.size(); k++){
+            if(people[i].adj[k].p->name == currentUser->name){
+                for(int j = 0; j < currentUser->adj.size(); j++){
+                    if(currentUser->adj[j].p->name == people[i].name){
+                        isFound = true;
+                        noReqs = false;
+                    }
+                }
+                if(!isFound)
+                {
+                    std::cout << people[i].name << std::endl;
+                }
+                isFound = false;
+            }
+        }
+    }
+    if(noReqs)
+    {
+        std::cout << "No friend requests." << std::endl;
+    }
+
+}
+void Graph::logout(){
+    currentUser = NULL;
+    isLogged = false;
+    std::cout << "You have been logged out" << std::endl;
 }

@@ -14,13 +14,14 @@ char menu()
     std::cout << "======Main Menu=====" << std::endl;
     std::cout << "1. Login" << std::endl;
     std::cout << "2. Add Friends" << std::endl;
-    std::cout << "3. Remove Friends" << std::endl;
+    std::cout << "3. Remove Friend" << std::endl;
     std::cout << "4. Display Everyone" << std::endl;
     std::cout << "5. Display Friends" << std::endl;
     std::cout << "6. Display Mutual Friends" << std::endl;
-    std::cout << "7. Shortest connection path" << std::endl;
+    std::cout << "7. Display Friend Requests" << std::endl;
     std::cout << "8. Send Friend Request" << std::endl;
-    std::cout << "9. Quit" << std::endl;//Logout?
+    std::cout << "9. Logout" << std::endl;
+    std::cout << "Q. Quit" << std::endl;//Logout?
     cin >> userinput;
     return userinput;
 }
@@ -82,6 +83,10 @@ while(getline(infile, line))
         case '2':
             break;
         case '3':
+            cin.ignore();
+            cout << "Please enter a name" << endl;
+            getline(cin, input);
+            G.removeFriend(input);
             break;
         case '4':
             G.displayEveryone();
@@ -90,14 +95,23 @@ while(getline(infile, line))
             G.displayFriends();
             break;
         case '6':
+            G.displayMutual();
             break;
         case '7':
+            G.displayFriendReq();
             break;
         case '8':
+            cin.ignore();
+            cout << "Please enter a name" << endl;
+            getline(cin, input);
+            G.sendReq(input);
+            break;
+        case '9':
+            G.logout();
             break;
        }
 
-   }while(userinput != '9');
+   }while(userinput != 'Q');
    cout << "Goodbye!" << endl;
 }
 
