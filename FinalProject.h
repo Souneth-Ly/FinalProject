@@ -25,18 +25,17 @@ class Graph
     public:
         Graph();
         ~Graph();
-        void addConnection(std::string, std::string, int weight);
         void addPerson(std::string name);
+        void addConnection(std::string, std::string, int weight);
         void login(std::string);
         void removeFriend(std::string name);
+        void sendReq(std::string name);
         void displayFriends();
         void displayEveryone();
         void displayMutual();
         void displayFriendReq();
-        void findDistricts();//..change name later
+        void findDistricts();
         void BFTraversal(std::string);
-        //void shortestConnectionPath(std::string ending_name);//this one
-        void sendReq(std::string name);
         void logout();
     protected:
     private:
