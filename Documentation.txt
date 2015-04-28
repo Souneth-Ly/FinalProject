@@ -1,0 +1,259 @@
+--------------------
+Function Prototype:  void Graph::addPerson(string)
+--------------------
+
+Function Description:
+----------------------
+Adds person into the graph as a vertex. This person will not initiate with any connection. Any string will become a vertex.
+
+Used in the beginning of code to build graph.
+
+Example:
+---------
+Graph g;
+g.addPerson("John");
+
+Precondition: 
+--------------
+None
+Postcondition: 
+---------------
+name is now put into a person struct that is then placed in the people vector
+
+--------------------
+Function Prototype:  void Graph::addConnection(string, string, int)
+--------------------
+
+Function Description:
+----------------------
+Takes in two strings. Makes a connection from the first string to the second string, but does not make a connection the other way. Only makes connection if int is greater than 1. This connection is considered a "friend request".
+
+Used in beginning of the code to build graph. Also used in order to make a friend request or accept a friend request.
+
+Example:
+---------
+Graph g;
+g.addConnection("John", "Sally", 1);
+
+Precondition:
+--------------
+Both names must be in the graph.
+
+Postcondition:
+---------------
+A connection will be created from first name to second name.
+
+--------------------
+Function Prototype: void Graph::login(string)
+--------------------
+
+Function Description:
+----------------------
+Sets the user as one of the people within the graph. This user will be used in order to make friend requests, check their friends and majority of the functions.
+
+Example:
+---------
+Graph g;
+g.login("Joe");
+
+Precondition:
+--------------
+Name must be in graph.
+
+Postcondition:
+---------------
+Sets currentUser to the person in the graph that matches the name.
+
+--------------------
+Function Prototype:  void Graph::removeFriend(string)
+--------------------
+
+Function Description:
+----------------------
+Either deletes a friend or erases a friend requests between the currentUser and the inputted name. Both friend requests incoming as well as friend requests would be removed. 
+
+Example:
+---------
+Graph g;
+g.login("John");
+g.removeFriend("Sally");
+
+Precondition:
+--------------
+User has to be logged in. Person's connection to be deleted must exist in the graph.
+
+Postcondition:
+---------------
+Any connection between the current User and the person will be removed.
+
+--------------------
+Function Prototype:  void Graph::sendReq(string)
+--------------------
+
+Function Description:
+----------------------
+Either sends a friend request or accepts a friend request from the currentUser to the inputted name.
+
+Example:
+---------
+Graph g;
+g.login("John");
+g.sendReq("Sally");
+
+Precondition:
+--------------
+User must be logged in. Connection cannot be already made from currentUser to inputted person. 
+
+Postcondition:
+---------------
+Connection is made from currentUser to inputted person.
+
+--------------------
+Function Prototype:  void Graph::displayFriends()
+--------------------
+
+Function Description:
+----------------------
+Displays all friends of currentUser by going through all the connections of currentUser and seeing which connections also have a connection to currentUser.
+
+Example:
+---------
+Graph g;
+g.login("John");
+g.displayFriends();
+
+Precondition:
+--------------
+User has to be logged in.
+
+Postcondition:
+---------------
+Prints out each friend of currentUser.
+
+--------------------
+Function Prototype:  void Graph::displayEveryone()
+--------------------
+
+Function Description:
+----------------------
+Displays every person within the graph people.
+
+Example:
+---------
+graph G;
+g.displayEveryone();
+
+Precondition:
+--------------
+Will not display anything if there is no person in the graph.
+
+Postcondition:
+---------------
+Displays every name in the graph people.
+
+--------------------
+Function Prototype:  void Graph::displayMutual();
+--------------------
+
+Function Description:
+----------------------
+Displays the people who share the same friends as currentUser, but are not friends of currentUser.
+
+Example:
+---------
+Graph g;
+g.login("John");
+g.displayMutual();
+
+Precondition:
+--------------
+Will not display anything if there are no mutual friends. User must be logged in. 
+
+Postcondition:
+---------------
+Displays all mutual friends.
+
+--------------------
+Function Prototype:  void Graph::displayFriendReq();
+--------------------
+
+Function Description:
+----------------------
+Shows all people who have a connection towards currentUser but currentUser does not have a connection to.
+
+Example:
+---------
+Graph g;
+g.login("John");
+g.displayFriendReq();
+
+Precondition:
+--------------
+User must be logged in. Will not display anything if there are no friend requests.
+
+Postcondition:
+---------------
+Displays all names of friends.
+
+--------------------
+Function Prototype:  void Graph::findDistricts();
+--------------------
+
+Function Description:
+----------------------
+Finds the districts of the graph of people. Used in previous graph assignment.
+
+Example:
+---------
+Graph g;
+g.findDistricts();
+
+Precondition:
+--------------
+Must be data in graph.
+
+Postcondition:
+---------------
+IDs will get assigned to each person.
+
+--------------------
+Function Prototype:  void Graph::BFTraversal(string);
+--------------------
+
+Function Description:
+----------------------
+Takes in a string and traverses through every node connected to each other. Marks each as visited. Used for finding Districts.
+
+Example:
+---------
+Used in findDistricts
+
+Precondition:
+--------------
+Name of person must be in graph
+
+Postcondition:
+---------------
+Marks every person connected to each other as visited starting from the inputted person.
+
+--------------------
+Function Prototype:  void Graph::logout()
+--------------------
+
+Function Description:
+----------------------
+Unsets currentUser to allow logging in to another user.
+
+Example:
+---------
+Graph g;
+g.login();
+g.logout();
+
+Precondition:
+--------------
+User must be logged in.
+
+Postcondition:
+---------------
+currentUser is pointed to null.
