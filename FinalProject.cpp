@@ -206,20 +206,32 @@ void Graph::displayMutual(){
 //If there's only one connection, it's a friend connection one way.
 void Graph::sendReq(std::string name){
     if(isLogged){
-        person *Holder;
+        person *Holder = NULL;
+	std::cout<<Holder<<std::endl;
         bool requestToPerson = true;
         bool requestToUser = true;
-
+	for(int i = 0; i <people.size(); i++){
+	    if(people[i].name == ""){
+		std::cout<<"There is no one by this name"<<std::endl;
+		}else{
         for(int i = 0; i < people.size(); i++){
+		//std::cout<<"3"<<std::endl;
             if(people[i].name == name){
                 Holder = &people[i];
             }
         }
+	}
+}
+	if(Holder == NULL){
+	std::cout<<"person doesn't exist"<<std::endl;
+	return;
+	}
         for(int i = 0; i < currentUser->adj.size(); i++){
             if(currentUser->adj[i].p->name == Holder->name){
                 requestToPerson = false; //If my adjacent friends contain the person, I can't send a request to the person
             }
         }
+	
         for(int i = 0; i < Holder->adj.size(); i++){
             if(Holder->adj[i].p->name == currentUser->name){
                 requestToUser = false; //If their adjacent friends contain me, they cannot send a friend request to me
