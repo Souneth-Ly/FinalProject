@@ -207,7 +207,6 @@ void Graph::displayMutual(){
 void Graph::sendReq(std::string name){
     if(isLogged){
         person *Holder = NULL;
-	std::cout<<Holder<<std::endl;
         bool requestToPerson = true;
         bool requestToUser = true;
 	for(int i = 0; i <people.size(); i++){
@@ -215,7 +214,6 @@ void Graph::sendReq(std::string name){
 		std::cout<<"There is no one by this name"<<std::endl;
 		}else{
         for(int i = 0; i < people.size(); i++){
-		//std::cout<<"3"<<std::endl;
             if(people[i].name == name){
                 Holder = &people[i];
             }
@@ -261,7 +259,7 @@ void Graph::sendReq(std::string name){
 //Removes a friend or a friend request connected to currentUser
 void Graph::removeFriend(std::string name){
     if(isLogged){
-        person *Holder;
+        person *Holder = NULL;
         bool deleteUser = false;
         bool deleteFriend = false;
         for(int i = 0; i < currentUser->adj.size(); i++){
@@ -270,11 +268,21 @@ void Graph::removeFriend(std::string name){
                 deleteFriend = true; //Friend removed from currentUser's adjacent list
             }
         }
+	for(int i = 0; i < people.size(); i++){
+	    if(people[i].name == " "){
+		return;
+		}else{
         for(int i = 0; i < people.size(); i++){
             if(people[i].name == name){
                 Holder = &people[i];
             }
         }
+	}
+	}
+	if(Holder == NULL){
+		std::cout<<"Person does't exist"<<std::endl;
+		return;
+	}
         for(int i = 0; i < Holder->adj.size(); i++){
             if(Holder->adj[i].p->name == currentUser->name){
                 Holder->adj.erase(Holder->adj.begin() + i);
